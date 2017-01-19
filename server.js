@@ -5,6 +5,10 @@ var bodyParser = require("body-parser");
 var express = require("express");
 var app = express();
 
+//require the html and api route files
+require("./app/routing/htmlRoutes")(app);
+require("./app/routing/apiRoutes")(app);
+
 // Sets up the Express app to handle data parsing
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
