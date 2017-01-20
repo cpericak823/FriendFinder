@@ -1,21 +1,23 @@
-//Global Variables and Node Packages
-var PORT = process.env.PORT || 3000;
-
+//require express, body-parser, and path packages
 var bodyParser = require("body-parser");
 var express = require("express");
+var path = require("path");
+
+//create the express server
 var app = express();
 
-//require the html and api route files
-require("./app/routing/htmlRoutes")(app);
-require("./app/routing/apiRoutes")(app);
+//Set the port equal to the environment port or 3000
+var PORT = process.env.PORT || 3000;
 
-
-
-// Sets up the Express app to handle data parsing
+//use body-parser middleware to format the data
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.text());
 app.use(bodyParser.json({ type: "application/vnd.api+json" }));
+
+//require the html and api route files
+require("./app/routing/htmlRoutes.js")(app);
+require("./app/routing/apiRoutes.js")(app);
 
 
 //Listen to the server

@@ -5,9 +5,10 @@
   <meta charset="UTF-8">
   <title>Friend Finder</title>
   <!-- Latest compiled and minified CSS & JS -->
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
-  <script src="https://use.fontawesome.com/f807d3f979.js"></script>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
   <script src="https://code.jquery.com/jquery.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+  <script src="https://use.fontawesome.com/f807d3f979.js"></script>
 </head>
 
 <body>
@@ -146,33 +147,35 @@
     <hr>
     <footer class="footer ">
       <div class="container ">
-        <p><a href="./api/friends ">API Friends List</a> | <a href="https://github.com/cpericak823/friendfinder.git ">GitHub Repo</a></p>
+        <p><a href="/api/friends ">API Friends List</a> | <a href="https://github.com/cpericak823/friendfinder.git ">GitHub Repo</a></p>
       </div>
     </footer>
-    <!--   html for modal -->
-    <div id="friendModal " class="modal fade ">
-      <div class="modal-dialog " role="document ">
-        <div class="modal-content ">
-          <div class="modal-header ">
-            <h5 class="modal-title ">Best Match</h5>
-            <button type="button " class="close " data-dismiss="modal " aria-label="Close ">
-              <span aria-hidden="true ">&times;</span>
-            </button>
-          </div>
-          <div class="modal-body ">
-            <p>/*profile pic*/</p>
-          </div>
-          <div class="modal-footer ">
-            <button type="button " class="btn btn-secondary " data-dismiss="modal ">Close</button>
-          </div>
+  </div>
+  <!--   html for modal -->
+  <div id="friendModal " class="modal fade ">
+    <div class="modal-dialog " role="document ">
+      <div class="modal-content ">
+        <div class="modal-header ">
+          <h5 class="modal-title ">Best Match</h5>
+          <button type="button " class="close " data-dismiss="modal " aria-label="Close ">
+            <span aria-hidden="true ">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body ">
+          <p>/*profile pic*/</p>
+        </div>
+        <div class="modal-footer ">
+          <button type="button " class="btn btn-secondary " data-dismiss="modal ">Close</button>
         </div>
       </div>
     </div>
   </div>
 </body>
+
+</html>
 <script type="text/javascript">
 //On click event for the submit button that pushes survey data to the friends array
-$("#submit").on("click", function(event) {
+$("#submit").on("click", function() {
 
   //gather the values of each dropdown and push to an array
   var scores = [];
@@ -180,6 +183,7 @@ $("#submit").on("click", function(event) {
     scores[i] = $(selected).text();
   });
 
+  //figure out what this does
   event.preventDefault();
 
   //collect the survey data and remove any unnecessary white space
@@ -189,18 +193,22 @@ $("#submit").on("click", function(event) {
     scores: scores
   };
 
+  //log the new data
+  console.log(newFriend);
+
+  //use this instead of the port since the url will change after pushing to heroku
+  var currentURL = window.location.origin;
+
   //post the newly added data
-  $.post("/api/friends", newFriend)
-    .done(function(data) {
-      console.log(data);
-    });
+  $.post(currentURL + "/api/friends", newFriend, function(data) {
+    if (data) {
 
-  //jquery to load modal when clicking submit on the the survey page
-  $("#friendModal").modal("toggle");
+      //calculate comparison of scores between user and friends api list
 
+      //jquery to load modal when clicking submit on the the survey page
+      $("#friendModal").modal("toggle");
+    }
+  });
+  return false;
 });
-
-//calculate comparison of scores between user and friends api list
 </script>
-
-</html>
