@@ -180,7 +180,7 @@ $("#submit").on("click", function() {
   //gather the values of each dropdown and push to an array
   var scores = [];
   $(".selectpicker :selected").each(function(i, selected) {
-    scores[i] = $(selected).text();
+    scores[i] = $(selected).text().charAt(0);
   });
 
   //figure out what this does
@@ -209,7 +209,7 @@ $("#submit").on("click", function() {
       $("#friendModal").modal("toggle");
     }
   });
- return false;
+  return false;
 
 });
 </script>
