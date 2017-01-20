@@ -152,7 +152,7 @@
     </footer>
   </div>
   <!--   html for modal -->
-  <div id="friendModal" class="modal fade" role="dialog">
+  <div class="modal fade" id="friendModal" role="dialog">
     <div class="modal-dialog">
       <div class="modal-content ">
         <div class="modal-header ">
@@ -176,7 +176,13 @@
     //gather the values of each dropdown and push to an array
     var scores = [];
     $(".selectpicker :selected").each(function(i, selected) {
-      scores[i] = $(selected).text().charAt(0);
+      if (this.selected) {
+        scores[i] = $(selected).text().charAt(0);
+
+      } else {
+        alert("Please answer all questions!");
+      }
+
     });
 
     //prevent the default option from being used
@@ -200,6 +206,8 @@
       if (data) {
 
         //calculate comparison of scores between user and friends api list
+
+
         //jquery to load modal when clicking submit on the the survey page
         $("#friendModal").modal("toggle");
 
