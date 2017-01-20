@@ -1,3 +1,5 @@
+var path = require("path");
+
 //export the app.get and app.post functions to access it in server.js
 module.exports = function htmlRoutes(app) {
     //route to the home page

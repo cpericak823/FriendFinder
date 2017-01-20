@@ -1,3 +1,5 @@
+var path = require("path");
+
 //array for friends data to start matching new friends with
 var friends = [{
     "name": "Ahmed",
