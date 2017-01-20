@@ -152,17 +152,16 @@
     </footer>
   </div>
   <!--   html for modal -->
-  <div id="friendModal " class="modal fade ">
-    <div class="modal-dialog " role="document ">
+  <div id="friendModal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
       <div class="modal-content ">
         <div class="modal-header ">
-          <h5 class="modal-title ">Best Match</h5>
-          <button type="button " class="close " data-dismiss="modal " aria-label="Close ">
-            <span aria-hidden="true ">&times;</span>
+          <button type="button " class="close " data-dismiss="modal " aria-label="Close "><span aria-hidden="true ">&times;</span>
           </button>
+          <h5 class="modal-title ">Best Match</h5>
         </div>
         <div class="modal-body ">
-          <p>/*profile pic*/</p>
+          <p>profile pic</p>
         </div>
         <div class="modal-footer ">
           <button type="button " class="btn btn-secondary " data-dismiss="modal ">Close</button>
@@ -170,46 +169,47 @@
       </div>
     </div>
   </div>
+  <script type="text/javascript">
+  //On click event for the submit button that pushes survey data to the friends array
+  $("#submit").on("click", function() {
+
+    //gather the values of each dropdown and push to an array
+    var scores = [];
+    $(".selectpicker :selected").each(function(i, selected) {
+      scores[i] = $(selected).text().charAt(0);
+    });
+
+    //figure out what this does
+    event.preventDefault();
+
+    //collect the survey data and remove any unnecessary white space
+    var newFriend = {
+      name: $("#name").val().trim(),
+      photo: $("#photo").val().trim(),
+      scores: scores
+    };
+
+    //log the new data
+    console.log(newFriend);
+
+    //use this instead of the port since the url will change after pushing to heroku
+    var currentURL = window.location.origin;
+
+    //post the newly added data
+    $.post(currentURL + "/api/friends", newFriend, function(data) {
+      if (data) {
+
+        //calculate comparison of scores between user and friends api list
+        //jquery to load modal when clicking submit on the the survey page
+        $("#friendModal").modal("toggle");
+
+      }
+    });
+
+    return false;
+
+  });
+  </script>
 </body>
 
 </html>
-<script type="text/javascript">
-//On click event for the submit button that pushes survey data to the friends array
-$("#submit").on("click", function() {
-
-  //gather the values of each dropdown and push to an array
-  var scores = [];
-  $(".selectpicker :selected").each(function(i, selected) {
-    scores[i] = $(selected).text().charAt(0);
-  });
-
-  //figure out what this does
-  event.preventDefault();
-
-  //collect the survey data and remove any unnecessary white space
-  var newFriend = {
-    name: $("#name").val().trim(),
-    photo: $("#photo").val().trim(),
-    scores: scores
-  };
-
-  //log the new data
-  console.log(newFriend);
-
-  //use this instead of the port since the url will change after pushing to heroku
-  var currentURL = window.location.origin;
-
-  //post the newly added data
-  $.post(currentURL + "/api/friends", newFriend, function(data) {
-    if (data) {
-
-      //calculate comparison of scores between user and friends api list
-
-      //jquery to load modal when clicking submit on the the survey page
-      $("#friendModal").modal("toggle");
-    }
-  });
-  return false;
-
-});
-</script>
