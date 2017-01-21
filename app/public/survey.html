@@ -21,18 +21,16 @@
       <div class="panel-heading">
         <h3><strong>About You</strong></h3></div>
       <div class="panel-body">
-        <form class="form">
-          <div class="form-group">
-            <label for="name">
-              <h4>Name (Required)</h4></label>
-            <input type="text" id="name" class="form-control">
-          </div>
-          <div class="form-group">
-            <label for="photo">
-              <h4>Link to Photo Image (Required)</h4></label>
-            <input type="text" id="photo" class="form-control">
-          </div>
-        </form>
+        <div class="form-group">
+          <label for="name">
+            <h4>Name (Required)</h4></label>
+          <input type="text" id="name" class="form-control">
+        </div>
+        <div class="form-group">
+          <label for="photo">
+            <h4>Link to Photo Image (Required)</h4></label>
+          <input type="text" id="photo" class="form-control">
+        </div>
       </div>
     </div>
     <hr>
@@ -140,7 +138,7 @@
         </select>
         <br>
         <br>
-        <button type="submit" class="btn btn-primary btn-lg btn-block" data-toggle="modal" data-target="#friendModal" id="submit"><i class="fa fa-check-circle" aria-hidden="true"></i> Submit
+        <button type="submit" class="btn btn-primary btn-lg btn-block" id="submit"><i class="fa fa-check-circle" aria-hidden="true"></i> Submit
         </button>
       </div>
     </div>
@@ -173,27 +171,42 @@
   //On click event for the submit button that pushes survey data to the friends array
   $("#submit").on("click", function() {
 
+    //validation variable
+    var formIsValid = true;
+
     //gather the values of each dropdown and push to an array
     var scores = [];
     $(".selectpicker :selected").each(function(i, selected) {
-      if (this.selected) {
-        scores[i] = $(selected).text().charAt(0);
+      scores[i] = $(selected).text().charAt(0);
 
-      } else {
-        alert("Please answer all questions!");
+      //if the scores array is falsey, formIsValid is false
+      if (scores[i] === "S") {
+        formIsValid = false;
       }
-
     });
+    console.log(scores);
+    //if the input boxes are falsey, formIsValid is false
+    if ($("#name").val() === '' || $("#photo").val() === '') {
+      formIsValid = false;
+    }
+    //if formIsValid, define a newFriend variable
+    if (formIsValid) {
+      var newFriend = {
+        name: $("#name").val().trim(),
+        photo: $("#photo").val().trim(),
+        scores: scores
+      };
+      //call the createNewFriend function
+      createNewFriend(newFriend);
+    }
+    //anytime formIsValid is false, alert the user to complete the whole form
+    else {
+      alert("Please complete the entire form!");
+    }
 
-    //prevent the default option from being used
-    event.preventDefault();
-
-    //collect the survey data and remove any unnecessary white space
-    var newFriend = {
-      name: $("#name").val().trim(),
-      photo: $("#photo").val().trim(),
-      scores: scores
-    };
+  });
+  //define the createNewFriend function that logs the friend, and posts the new data to the friends array and launch the modal
+  function createNewFriend(newFriend) {
 
     //log the new data
     console.log(newFriend);
@@ -205,18 +218,19 @@
     $.post(currentURL + "/api/friends", newFriend, function(data) {
       if (data) {
 
-        //calculate comparison of scores between user and friends api list
-
+        //call matchFriends function
+        matchFriends();
 
         //jquery to load modal when clicking submit on the the survey page
         $("#friendModal").modal("toggle");
-
+        //fix closing modal and only show popup when form is valid
       }
     });
+  }
 
-    return false;
-
-  });
+  function matchFriends(newFriend) {
+    //calculate comparison of scores between user and friends api list
+  }
   </script>
 </body>
 

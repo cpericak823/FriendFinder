@@ -15,6 +15,7 @@ module.exports = function(app) {
 
         //push the new data to the friends data array
         friendsData.push(req.body);
+        res.send("");
 
     });
 };
