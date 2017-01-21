@@ -154,7 +154,7 @@
     <div class="modal-dialog">
       <div class="modal-content ">
         <div class="modal-header ">
-          <button type="button " class="close " data-dismiss="modal " aria-label="Close "><span aria-hidden="true ">&times;</span>
+          <button type="button " class="close " data-dismiss="modal" aria-label="Close "><span aria-hidden="true ">&times;</span>
           </button>
           <h5 class="modal-title ">Best Match</h5>
         </div>
@@ -162,7 +162,7 @@
           <p>profile pic</p>
         </div>
         <div class="modal-footer ">
-          <button type="button " class="btn btn-secondary " data-dismiss="modal ">Close</button>
+          <button type="button " class="btn btn-secondary " data-dismiss="modal">Close</button>
         </div>
       </div>
     </div>
@@ -215,16 +215,17 @@
     var currentURL = window.location.origin;
 
     //post the newly added data
-    $.post(currentURL + "/api/friends", newFriend, function(data) {
-      if (data) {
+    $.post(currentURL + "/api/friends", newFriend, function() {
 
-        //call matchFriends function
-        matchFriends();
 
-        //jquery to load modal when clicking submit on the the survey page
-        $("#friendModal").modal("toggle");
-        //fix closing modal and only show popup when form is valid
-      }
+      //call matchFriends function
+      matchFriends();
+
+      //jquery to load modal when clicking submit on the the survey page
+      $("#friendModal").modal("show");
+
+      //fix closing modal and only show popup when form is valid
+
     });
   }
 
