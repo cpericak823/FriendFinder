@@ -152,14 +152,13 @@
   <!--   html for modal -->
   <div class="modal fade" id="friendModal" role="dialog">
     <div class="modal-dialog">
-      <div class="modal-content ">
-        <div class="modal-header ">
+      <div class="modal-content">
+        <div class="modal-header">
           <button type="button " class="close " data-dismiss="modal" aria-label="Close "><span aria-hidden="true ">&times;</span>
           </button>
-          <h5 class="modal-title ">Best Match</h5>
+          <h5 class="modal-title">Best Match</h5>
         </div>
-        <div class="modal-body ">
-          <p>profile pic</p>
+        <div class="modal-body">
         </div>
         <div class="modal-footer ">
           <button type="button " class="btn btn-secondary " data-dismiss="modal">Close</button>
@@ -208,29 +207,18 @@
   //define the createNewFriend function that logs the friend, and posts the new data to the friends array and launch the modal
   function createNewFriend(newFriend) {
 
-    //log the new data
-    console.log(newFriend);
-
     //use this instead of the port since the url will change after pushing to heroku
     var currentURL = window.location.origin;
 
     //post the newly added data
-    $.post(currentURL + "/api/friends", newFriend, function() {
+    $.post(currentURL + "/api/friends", newFriend, function(closestMatch) {
 
+      //jquery to load modal when clicking submit on the the survey page and display name and image of closest match
+      $(".modal-body").html('<p>' + closestMatch.name + '</p>');
+      $(".modal-body").append('<img src="' + closestMatch.photo + '" width="200px" >');
 
-      //call matchFriends function
-      matchFriends();
-
-      //jquery to load modal when clicking submit on the the survey page
       $("#friendModal").modal("show");
-
-      //fix closing modal and only show popup when form is valid
-
     });
-  }
-
-  function matchFriends(newFriend) {
-    //calculate comparison of scores between user and friends api list
   }
   </script>
 </body>

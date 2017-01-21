@@ -8,4 +8,4 @@ Once the user gets to the survey, they will need to type their name, link to a p
 ![Complete Survey](http://i.imgur.com/A6yNSLj.jpg)
 
 A popup will then appear matching the user with a new friend as shown below:
-![New Friend](http://i.imgur.com/jXUk9Tu.jpg)
+![New Friend](http://i.imgur.com/mNSS4o4.jpg)
